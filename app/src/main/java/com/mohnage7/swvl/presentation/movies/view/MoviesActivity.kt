@@ -9,7 +9,7 @@ import com.mohnage7.swvl.R
 import com.mohnage7.swvl.framework.extentions.makeGone
 import com.mohnage7.swvl.framework.extentions.makeVisible
 import com.mohnage7.swvl.framework.extentions.replaceFragment
-import com.mohnage7.swvl.presentation.model.DataWrapper
+import com.mohnage7.swvl.presentation.model.DataWrapper.Status
 import com.mohnage7.swvl.presentation.model.Movie
 import com.mohnage7.swvl.presentation.moviedetails.view.MovieDetailFragment
 import com.mohnage7.swvl.presentation.moviedetails.view.MovieDetailsActivity
@@ -26,21 +26,23 @@ class MoviesActivity : AppCompatActivity(), MovieClickListener {
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
-    private var twoPane: Boolean = false
+    private val twoPane: Boolean by lazy { isLargeDevice() }
     private val moviesViewModel: MoviesViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movies_list)
-        if (findViewById<NestedScrollView>(R.id.item_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
-            twoPane = true
-        }
-
         observeMoviesList()
+    }
+
+    /**
+     * The detail container view will be present only in the
+     * large-screen layouts (res/values-w900dp).
+     * If this view is present, then the
+     * activity should be in two-pane mode.
+     */
+    private fun isLargeDevice(): Boolean {
+        return findViewById<NestedScrollView>(R.id.item_detail_container) != null
     }
 
     private fun observeMoviesList() {
@@ -48,11 +50,11 @@ class MoviesActivity : AppCompatActivity(), MovieClickListener {
             .observeMoviesList()
             .observe(this, Observer { dataWrapper ->
                 when (dataWrapper.status) {
-                    DataWrapper.Status.SUCCESS -> {
+                    Status.SUCCESS -> {
                         hideLoading()
                         setMoviesAdapter(dataWrapper.data)
                     }
-                    DataWrapper.Status.LOADING -> showLoading()
+                    Status.LOADING -> showLoading()
                 }
             })
     }
