@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
 import com.mohnage7.swvl.R
-import com.mohnage7.swvl.presentation.movies.model.Movie
+import com.mohnage7.swvl.presentation.model.Movie
 import com.mohnage7.swvl.presentation.movies.view.MoviesActivity
 
 /**

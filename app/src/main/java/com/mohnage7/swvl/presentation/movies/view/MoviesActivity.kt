@@ -4,14 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
+import androidx.lifecycle.Observer
 import com.mohnage7.swvl.R
+import com.mohnage7.swvl.framework.extentions.makeGone
+import com.mohnage7.swvl.framework.extentions.makeVisible
 import com.mohnage7.swvl.framework.extentions.replaceFragment
+import com.mohnage7.swvl.presentation.model.DataWrapper
+import com.mohnage7.swvl.presentation.model.Movie
 import com.mohnage7.swvl.presentation.moviedetails.view.MovieDetailFragment
 import com.mohnage7.swvl.presentation.moviedetails.view.MovieDetailsActivity
-import com.mohnage7.swvl.presentation.movies.model.Movie
 import com.mohnage7.swvl.presentation.movies.view.adapter.MoviesAdapter
 import com.mohnage7.swvl.presentation.movies.view.callback.MovieClickListener
 import com.mohnage7.swvl.presentation.movies.viewmodel.MoviesViewModel
+import kotlinx.android.synthetic.main.layout_loading_movies.*
 import kotlinx.android.synthetic.main.layout_movies_list.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -35,11 +40,37 @@ class MoviesActivity : AppCompatActivity(), MovieClickListener {
             twoPane = true
         }
 
-        setupRecyclerView()
+        observeMoviesList()
     }
 
-    private fun setupRecyclerView() {
-        moviesRecyclerView.adapter = MoviesAdapter(moviesViewModel.observePostsChanges(),this)
+    private fun observeMoviesList() {
+        moviesViewModel
+            .observeMoviesList()
+            .observe(this, Observer { dataWrapper ->
+                when (dataWrapper.status) {
+                    DataWrapper.Status.SUCCESS -> {
+                        hideLoading()
+                        setMoviesAdapter(dataWrapper.data)
+                    }
+                    DataWrapper.Status.LOADING -> showLoading()
+                }
+            })
+    }
+
+    private fun setMoviesAdapter(data: List<Movie>?) {
+        data?.let {
+            moviesRecyclerView.adapter = MoviesAdapter(it, this)
+        }
+    }
+
+
+    private fun showLoading() {
+        shimmerFrameLayout.makeVisible()
+    }
+
+    private fun hideLoading() {
+        shimmerFrameLayout.stopShimmer()
+        shimmerFrameLayout.makeGone()
     }
 
     override fun onMovieClick(movie: Movie) {

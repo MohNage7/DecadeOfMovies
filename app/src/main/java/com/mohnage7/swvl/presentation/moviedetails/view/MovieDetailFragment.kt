@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mohnage7.swvl.R
-import com.mohnage7.swvl.presentation.movies.model.Movie
+import com.mohnage7.swvl.presentation.model.Movie
 
 /**
  * A fragment representing a single movie detail screen.

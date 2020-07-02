@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mohnage7.swvl.R
 import com.mohnage7.swvl.framework.base.BaseViewHolder
-import com.mohnage7.swvl.presentation.movies.model.Movie
+import com.mohnage7.swvl.presentation.model.Movie
 import com.mohnage7.swvl.presentation.movies.view.callback.MovieClickListener
 import kotlinx.android.synthetic.main.item_movie.view.*
 

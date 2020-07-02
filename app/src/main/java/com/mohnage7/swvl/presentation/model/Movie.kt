@@ -1,4 +1,4 @@
-package com.mohnage7.swvl.presentation.movies.model
+package com.mohnage7.swvl.presentation.model
 
 import android.os.Parcel
 import android.os.Parcelable
