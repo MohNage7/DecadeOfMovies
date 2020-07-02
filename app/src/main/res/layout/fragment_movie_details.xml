@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".features.movies.view.MoviesActivity">
+    tools:context=".presentation.moviedetails.view.MovieDetailsActivity">
 
 
     <androidx.core.widget.NestedScrollView
@@ -20,91 +20,26 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <TextView
-                android:id="@+id/titleTxtView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="@dimen/dp_16"
-                android:layout_marginEnd="@dimen/dp_16"
-                android:layout_marginBottom="@dimen/dp_8"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textColor="@android:color/white"
-                android:transitionName="@string/title"
-                tools:text="Spider-Man: Far from Home" />
+            <include
+                android:id="@+id/itemLayout"
+                layout="@layout/item_movie" />
+
+            <View
+                android:id="@+id/line"
+                style="@style/vertical_line_thin"
+                android:layout_below="@+id/itemLayout" />
 
             <TextView
-                android:id="@+id/movieRatingTxtView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/titleTxtView"
-                android:layout_alignParentEnd="true"
-                android:layout_marginLeft="@dimen/dp_16"
-                android:layout_marginRight="@dimen/dp_16"
-                android:drawableStart="@drawable/ic_star"
-                android:drawablePadding="@dimen/dp_8"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textColor="@android:color/white"
-                tools:text="7.7" />
-
-            <TextView
-                android:id="@+id/movieReleaseDateTxtView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/titleTxtView"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="@dimen/dp_16"
-                android:layout_marginRight="@dimen/dp_16"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@android:color/white"
-                tools:text="2019-07-02" />
-
-
-            <TextView
-                android:id="@+id/descTxtView"
+                android:id="@+id/castTxtView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/line"
                 android:layout_centerInParent="true"
                 android:padding="@dimen/dp_16"
+                android:lineSpacingExtra="@dimen/dp_8"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@android:color/white"
                 tools:text="Peter Parker and his friends go on a summer trip to Europe. However, they will hardly be able to rest - Peter will have to agree to help Nick Fury uncover the mystery of creatures that cause natural disasters" />
-
-
-
-            <View
-                android:id="@+id/line"
-                style="@style/vertical_line_thin"
-                android:layout_below="@+id/movieReleaseDateTxtView" />
-
-
-            <TextView
-                android:id="@+id/videosTxtView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/descTxtView"
-                android:padding="@dimen/dp_16"
-                android:text="@string/videos"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/sp_16"
-                android:textStyle="bold" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/videosTxtView"
-                android:layout_marginStart="@dimen/dp_16"
-                android:layout_marginEnd="@dimen/dp_16"
-                android:layout_marginBottom="@dimen/dp_16"
-                android:nestedScrollingEnabled="false" />
-
-            <include
-                layout="@layout/layout_loading_videos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/videosTxtView" />
 
         </RelativeLayout>
 

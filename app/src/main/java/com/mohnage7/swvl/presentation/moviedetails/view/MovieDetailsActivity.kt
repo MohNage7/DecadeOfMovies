@@ -2,9 +2,10 @@ package com.mohnage7.swvl.presentation.moviedetails.view
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.mohnage7.swvl.R
+import com.mohnage7.swvl.framework.extentions.addFragment
 import com.mohnage7.swvl.presentation.model.Movie
 import com.mohnage7.swvl.presentation.movies.view.MoviesActivity
 
@@ -43,10 +44,7 @@ class MovieDetailsActivity : AppCompatActivity() {
                             intent.getParcelableExtra<Movie>(MovieDetailFragment.ARG_MOVIE))
                 }
             }
-
-            supportFragmentManager.beginTransaction()
-                    .add(R.id.item_detail_container, fragment)
-                    .commit()
+            addFragment(fragment, R.id.item_detail_container, false)
         }
     }
 

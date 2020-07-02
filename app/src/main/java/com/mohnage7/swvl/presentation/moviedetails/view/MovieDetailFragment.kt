@@ -1,12 +1,14 @@
 package com.mohnage7.swvl.presentation.moviedetails.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.mohnage7.swvl.R
 import com.mohnage7.swvl.presentation.model.Movie
+import kotlinx.android.synthetic.main.fragment_movie_details.*
+import kotlinx.android.synthetic.main.item_movie_placeholder.*
 
 /**
  * A fragment representing a single movie detail screen.
@@ -27,9 +29,26 @@ class MovieDetailFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.item_detail, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_movie_details, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setViews(movie)
+    }
+
+    private fun setViews(movie: Movie?) {
+        movie?.let {
+            titleTxtView.text = movie.title
+            ratingTxtView.text = movie.rating
+            yearTxtView.text = movie.year
+            genresTxtView.text = movie.getGenresListAsString()
+            castTxtView.text = movie.getCastListAsString()
+        }
     }
 
     companion object {

@@ -7,8 +7,8 @@ class Movie(
     val title: String? = null,
     val year: String? = null,
     val rating: String? = null,
-    val genresList: List<String>? = null,
-    val castList: List<String>? = null
+    private val genresList: List<String>? = null,
+    private val castList: List<String>? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -19,8 +19,16 @@ class Movie(
     ) {
     }
 
-    fun getGenresAsString(): String? {
+    fun getGenresListAsString(): String? {
         return genresList?.joinToString(separator = ", ")
+    }
+
+    fun getCastListAsString(): String? {
+        var cast = ""
+        castList?.forEach {
+            cast = cast.plus("• ".plus(it).plus("\n"))
+        }
+        return cast
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

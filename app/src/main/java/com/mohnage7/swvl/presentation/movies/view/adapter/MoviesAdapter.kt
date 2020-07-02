@@ -18,7 +18,7 @@ class MoviesAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val view: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_movie_card, parent, false)
         return MoviesViewHolder(view)
     }
 
@@ -35,18 +35,18 @@ class MoviesAdapter(
 
         override fun bindViews(position: Int) {
             val movie = movieList[position]
-            itemView.movieTitleTv.text = movie.title
-            itemView.ratingTv.text = movie.rating
-            itemView.yearTv.text = movie.year
-            itemView.genresTv.text = movie.getGenresAsString()
+            itemView.titleTxtView.text = movie.title
+            itemView.ratingTxtView.text = movie.rating
+            itemView.yearTxtView.text = movie.year
+            itemView.genresTxtView.text = movie.getGenresListAsString()
             itemView.setOnClickListener { movieClickListener.onMovieClick(movie) }
         }
 
         override fun clear() {
-            itemView.movieTitleTv.text = ""
-            itemView.genresTv.text = ""
-            itemView.movieTitleTv.text = ""
-            itemView.yearTv.text = ""
+            itemView.titleTxtView.text = ""
+            itemView.genresTxtView.text = ""
+            itemView.titleTxtView.text = ""
+            itemView.yearTxtView.text = ""
         }
     }
 }
