@@ -1,89 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/itemMovie"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/dp_2"
-    app:cardBackgroundColor="@color/colorPrimary"
-    app:cardCornerRadius="@dimen/dp_4"
-    app:cardElevation="@dimen/dp_4">
+    android:background="@color/colorPrimary"
+    android:padding="@dimen/dp_16">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/titleTxtView"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="@dimen/sp_18"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Holmes and Watson" />
+
+    <TextView
+        android:id="@+id/genresTxtView"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_8"
+        android:drawableStart="@drawable/ic_movie_genres"
+        android:drawablePadding="@dimen/dp_8"
+        android:ellipsize="end"
+        android:gravity="start|center_vertical"
+        android:maxLines="1"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline_1"
+        app:layout_constraintStart_toStartOf="@id/titleTxtView"
+        app:layout_constraintTop_toBottomOf="@id/titleTxtView"
+        tools:text="Action, Comedy, Science Fiction" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dp_16">
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6" />
 
-        <TextView
-            android:id="@+id/movieTitleTv"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/sp_18"
-            android:textStyle="bold"
-            android:maxLines="1"
-            android:ellipsize="end"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Holmes and Watson" />
+    <TextView
+        android:id="@+id/yearTxtView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/dp_16"
+        android:drawableStart="@drawable/ic_time"
+        android:drawablePadding="@dimen/dp_8"
+        android:gravity="center"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/genresTxtView"
+        app:layout_constraintTop_toTopOf="@id/genresTxtView"
+        tools:text="2009" />
 
-        <TextView
-            android:id="@+id/genresTv"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dp_8"
-            android:drawableStart="@drawable/ic_movie_genres"
-            android:drawablePadding="@dimen/dp_8"
-            android:gravity="start|center_vertical"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/sp_14"
-            android:textAlignment="viewStart"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/movieTitleTv"
-            app:layout_constraintEnd_toStartOf="@id/guideline_1"
-            app:layout_constraintTop_toBottomOf="@id/movieTitleTv"
-            tools:text="Action, Comedy, Science Fiction" />
+    <TextView
+        android:id="@+id/ratingTxtView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/dp_16"
+        android:drawableStart="@drawable/ic_star"
+        android:drawablePadding="@dimen/dp_8"
+        android:gravity="center"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/yearTxtView"
+        app:layout_constraintTop_toTopOf="@id/genresTxtView"
+        tools:text="5" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.6" />
-
-        <TextView
-            android:id="@+id/yearTv"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/dp_16"
-            android:drawableStart="@drawable/ic_time"
-            android:drawablePadding="@dimen/dp_8"
-            android:gravity="center"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/sp_14"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/genresTv"
-            app:layout_constraintTop_toTopOf="@id/genresTv"
-            tools:text="2009" />
-
-        <TextView
-            android:id="@+id/ratingTv"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/dp_16"
-            android:drawableStart="@drawable/ic_star"
-            android:drawablePadding="@dimen/dp_8"
-            android:gravity="center"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/sp_14"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/yearTv"
-            app:layout_constraintTop_toTopOf="@id/genresTv"
-            tools:text="5" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
