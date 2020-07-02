@@ -1,9 +1,13 @@
 package com.mohnage7.swvl.presentation.movies.view
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.core.widget.NestedScrollView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.NestedScrollView
 import com.mohnage7.swvl.R
+import com.mohnage7.swvl.presentation.extentions.replaceFragment
+import com.mohnage7.swvl.presentation.moviedetails.view.MovieDetailFragment
+import com.mohnage7.swvl.presentation.moviedetails.view.MovieDetailsActivity
 import com.mohnage7.swvl.presentation.movies.model.Movie
 import com.mohnage7.swvl.presentation.movies.view.callback.MovieClickListener
 
@@ -28,6 +32,30 @@ class MoviesActivity : AppCompatActivity(), MovieClickListener {
     }
 
     override fun onMovieClick(movie: Movie) {
-        TODO("Not yet implemented")
+        if (twoPane) {
+            navigateToDetailFragmentWith(movie)
+        } else {
+            launchDetailActivityWith(movie)
+        }
+    }
+
+    private fun launchDetailActivityWith(movie: Movie) {
+        val bundle = Bundle().apply {
+            putParcelable(MovieDetailFragment.ARG_MOVIE, movie)
+        }
+        val intent = Intent(this, MovieDetailsActivity::class.java).apply {
+            putExtras(bundle)
+        }
+        startActivity(intent)
+    }
+
+    private fun navigateToDetailFragmentWith(movie: Movie) {
+        val fragment = MovieDetailFragment()
+            .apply {
+                arguments = Bundle().apply {
+                    putParcelable(MovieDetailFragment.ARG_MOVIE, movie)
+                }
+            }
+        replaceFragment(fragment, R.id.item_detail_container, false)
     }
 }
