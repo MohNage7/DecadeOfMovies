@@ -1,2 +1,6 @@
+include ':usecase'
+include ':domain'
+include ':local'
+include ':data'
 include ':app'
 rootProject.name = "DecadeOfMovies"
