@@ -6,10 +6,12 @@ import android.os.Parcelable
 class Movie(
     val title: String? = null,
     val year: String? = null,
+    val rating: String? = null,
     val genresList: List<String>? = null,
     val castList: List<String>? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.createStringArrayList(),
@@ -24,6 +26,7 @@ class Movie(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(title)
         parcel.writeString(year)
+        parcel.writeString(rating)
         parcel.writeStringList(genresList)
         parcel.writeStringList(castList)
     }

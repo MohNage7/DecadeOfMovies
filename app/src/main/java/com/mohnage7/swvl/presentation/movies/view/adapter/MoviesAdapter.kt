@@ -36,9 +36,9 @@ class MoviesAdapter(
         override fun bindViews(position: Int) {
             val movie = movieList[position]
             itemView.movieTitleTv.text = movie.title
-            itemView.genresTv.text = movie.getGenresAsString()
-            itemView.movieTitleTv.text = movie.title
+            itemView.ratingTv.text = movie.rating
             itemView.yearTv.text = movie.year
+            itemView.genresTv.text = movie.getGenresAsString()
             itemView.setOnClickListener { movieClickListener.onMovieClick(movie) }
         }
 

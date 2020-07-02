@@ -9,7 +9,11 @@ import com.mohnage7.swvl.framework.extentions.replaceFragment
 import com.mohnage7.swvl.presentation.moviedetails.view.MovieDetailFragment
 import com.mohnage7.swvl.presentation.moviedetails.view.MovieDetailsActivity
 import com.mohnage7.swvl.presentation.movies.model.Movie
+import com.mohnage7.swvl.presentation.movies.view.adapter.MoviesAdapter
 import com.mohnage7.swvl.presentation.movies.view.callback.MovieClickListener
+import com.mohnage7.swvl.presentation.movies.viewmodel.MoviesViewModel
+import kotlinx.android.synthetic.main.layout_movies_list.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MoviesActivity : AppCompatActivity(), MovieClickListener {
 
@@ -18,6 +22,7 @@ class MoviesActivity : AppCompatActivity(), MovieClickListener {
      * device.
      */
     private var twoPane: Boolean = false
+    private val moviesViewModel: MoviesViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +34,12 @@ class MoviesActivity : AppCompatActivity(), MovieClickListener {
             // activity should be in two-pane mode.
             twoPane = true
         }
+
+        setupRecyclerView()
+    }
+
+    private fun setupRecyclerView() {
+        moviesRecyclerView.adapter = MoviesAdapter(moviesViewModel.observePostsChanges(),this)
     }
 
     override fun onMovieClick(movie: Movie) {

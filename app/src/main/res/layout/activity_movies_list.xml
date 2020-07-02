@@ -28,7 +28,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include layout="@layout/item_list" />
+        <include layout="@layout/layout_movies_list" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -44,6 +44,7 @@
         layout="@layout/layout_loading_movies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
