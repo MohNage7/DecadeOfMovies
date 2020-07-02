@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import com.mohnage7.swvl.R
-import com.mohnage7.swvl.presentation.extentions.replaceFragment
+import com.mohnage7.swvl.framework.extentions.replaceFragment
 import com.mohnage7.swvl.presentation.moviedetails.view.MovieDetailFragment
 import com.mohnage7.swvl.presentation.moviedetails.view.MovieDetailsActivity
 import com.mohnage7.swvl.presentation.movies.model.Movie

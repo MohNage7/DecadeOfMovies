@@ -1,4 +1,4 @@
-package com.mohnage7.swvl.presentation.base
+package com.mohnage7.swvl.framework.base
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

@@ -1,4 +1,4 @@
-package com.mohnage7.swvl.presentation.extentions
+package com.mohnage7.swvl.framework.extentions
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager

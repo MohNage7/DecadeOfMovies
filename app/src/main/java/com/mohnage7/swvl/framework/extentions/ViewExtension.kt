@@ -1,4 +1,4 @@
-package com.mohnage7.swvl.presentation.extentions
+package com.mohnage7.swvl.framework.extentions
 
 import android.view.View
 
