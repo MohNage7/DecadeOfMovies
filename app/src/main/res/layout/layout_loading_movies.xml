@@ -11,15 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include layout="@layout/item_movie"/>
-        <include layout="@layout/item_movie"/>
-        <include layout="@layout/item_movie"/>
-        <include layout="@layout/item_movie"/>
-        <include layout="@layout/item_movie"/>
-        <include layout="@layout/item_movie"/>
-        <include layout="@layout/item_movie"/>
-        <include layout="@layout/item_movie"/>
-        <include layout="@layout/item_movie" />
+        <include layout="@layout/item_movie_placeholder"/>
+        <include layout="@layout/item_movie_placeholder"/>
+        <include layout="@layout/item_movie_placeholder"/>
+        <include layout="@layout/item_movie_placeholder"/>
+        <include layout="@layout/item_movie_placeholder"/>
+        <include layout="@layout/item_movie_placeholder"/>
+        <include layout="@layout/item_movie_placeholder"/>
+        <include layout="@layout/item_movie_placeholder"/>
+        <include layout="@layout/item_movie_placeholder" />
     </LinearLayout>
 </com.facebook.shimmer.ShimmerFrameLayout>
 
