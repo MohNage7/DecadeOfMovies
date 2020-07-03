@@ -7,11 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.mohnage7.network.PhotosRequestConfig
 import com.mohnage7.swvl.R
+import com.mohnage7.swvl.presentation.model.DataWrapper
 import com.mohnage7.swvl.presentation.model.Movie
+import com.mohnage7.swvl.presentation.moviedetails.viewmodel.MovieDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_movie_details.*
 import kotlinx.android.synthetic.main.item_movie_placeholder.*
 import kotlinx.android.synthetic.main.layout_images_viewpager.*
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.math.abs
 
@@ -24,6 +28,7 @@ import kotlin.math.abs
 class MovieDetailFragment : Fragment() {
 
     private var movie: Movie? = null
+    private val movieDetailsViewModel: MovieDetailsViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,13 +49,31 @@ class MovieDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setViews(movie)
-        setupViewpager(
-            listOf(
-                "https://farm66.static.flickr.com/65535/49961792951_35c3344c0f.jpg",
-                "https://farm66.static.flickr.com/65535/32885403967_be14b95a9c.jpg",
-                "https://farm66.static.flickr.com/65535/48105179031_b5aeb65eb0.jpg"
+        movie?.title?.let {
+            movieDetailsViewModel.getMoviePhotos(
+                PhotosRequestConfig(
+                    "f204401bb9bb1d699f145f55ed61df03", movieName = it
+                )
             )
-        )
+
+            movieDetailsViewModel.observePostsChanges()
+                .observe(this, androidx.lifecycle.Observer { dataWrapper ->
+                    when (dataWrapper.status) {
+                        DataWrapper.Status.SUCCESS -> {
+                            dataWrapper.data?.let { photosList -> setupViewpager(photosList) }
+                        }
+                    }
+                })
+
+        }
+
+//        setupViewpager(
+//            listOf(
+//                "https://farm66.static.flickr.com/65535/49961792951_35c3344c0f.jpg",
+//                "https://farm66.static.flickr.com/65535/32885403967_be14b95a9c.jpg",
+//                "https://farm66.static.flickr.com/65535/48105179031_b5aeb65eb0.jpg"
+//            )
+//        )
     }
 
 

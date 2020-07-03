@@ -1,7 +1,10 @@
 package com.mohnage7
 
 import android.app.Application
+import com.mohnage7.swvl.di.dataBaseModule
+import com.mohnage7.swvl.di.movieDetailModule
 import com.mohnage7.swvl.di.moviesModule
+import com.mohnage7.swvl.di.networkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -14,7 +17,14 @@ class MoviesApplication : Application() {
     private fun startKoinInjection() {
         startKoin {
             androidContext(this@MoviesApplication)
-            modules(listOf(moviesModule))
+            modules(
+                listOf(
+                    moviesModule,
+                    dataBaseModule,
+                    movieDetailModule,
+                    networkModule
+                )
+            )
         }
     }
 }

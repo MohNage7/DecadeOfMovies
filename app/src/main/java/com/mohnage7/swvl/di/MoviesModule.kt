@@ -1,7 +1,7 @@
 package com.mohnage7.swvl.di
 
 import com.mohnage7.data.MoviesRepository
-import com.mohnage7.swvl.framework.data.MoviesLocalDataSourceImpl
+import com.mohnage7.swvl.framework.data.file.MoviesLocalDataSourceImpl
 import com.mohnage7.swvl.presentation.movies.viewmodel.MoviesViewModel
 import com.mohnage7.usecase.GetMoviesUseCase
 import org.koin.android.viewmodel.dsl.viewModel

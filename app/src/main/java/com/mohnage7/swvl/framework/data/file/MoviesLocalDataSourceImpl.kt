@@ -1,4 +1,4 @@
-package com.mohnage7.swvl.framework.data
+package com.mohnage7.swvl.framework.data.file
 
 import android.content.Context
 import com.google.gson.Gson

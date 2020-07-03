@@ -4,7 +4,7 @@ import com.mohnage7.domain.LocalMovie
 import com.mohnage7.local.MoviesLocalDataSource
 
 class MoviesRepository(private val dataSource: MoviesLocalDataSource) {
-    fun getMovies(): List<LocalMovie> {
+    fun getMoviesFromDataSource(): List<LocalMovie> {
         return dataSource.getMovies()
     }
 }
