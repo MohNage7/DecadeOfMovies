@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_movie_details">
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_16"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_1"
+        app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/countTxtView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="@dimen/dp_4"
+        android:paddingBottom="@dimen/dp_16"
+        android:textColor="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewPager"
+        tools:text="1/2" />
+</merge>

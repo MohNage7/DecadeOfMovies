@@ -1,6 +1,5 @@
 package com.mohnage7.swvl.presentation.moviedetails.view
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -24,44 +23,29 @@ class MovieDetailsActivity : AppCompatActivity() {
         // Show the Up button in the action bar.
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // savedInstanceState is non-null when there is fragment state
-        // saved from previous configurations of this activity
-        // (e.g. when rotating the screen from portrait to landscape).
-        // In this case, the fragment will automatically be re-added
-        // to its container so we don"t need to manually add it.
-        // For more information, see the Fragments API guide at:
-        //
-        // http://developer.android.com/guide/components/fragments.html
-        //
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             val fragment = MovieDetailFragment()
                 .apply {
-                arguments = Bundle().apply {
-                    putParcelable(
-                        MovieDetailFragment.ARG_MOVIE,
-                            intent.getParcelableExtra<Movie>(MovieDetailFragment.ARG_MOVIE))
+                    arguments = Bundle().apply {
+                        putParcelable(
+                            MovieDetailFragment.ARG_MOVIE,
+                            intent.getParcelableExtra<Movie>(MovieDetailFragment.ARG_MOVIE)
+                        )
+                    }
                 }
-            }
             addFragment(fragment, R.id.item_detail_container, false)
         }
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem) =
-            when (item.itemId) {
-                android.R.id.home -> {
-
-                    // This ID represents the Home or Up button. In the case of this
-                    // activity, the Up button is shown. For
-                    // more details, see the Navigation pattern on Android Design:
-                    //
-                    // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-
-                    navigateUpTo(Intent(this, MoviesActivity::class.java))
-
-                    true
-                }
-                else -> super.onOptionsItemSelected(item)
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
             }
+            else -> super.onOptionsItemSelected(item)
+        }
 }

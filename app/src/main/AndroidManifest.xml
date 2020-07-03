@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mohnage7.swvl">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,9 +23,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:label=""
             android:name=".presentation.moviedetails.view.MovieDetailsActivity"
-            android:parentActivityName=".presentation.movies.view.MoviesActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".presentation.movies.view.MoviesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.mohnage7.swvl.presentation.movies.view.MoviesActivity" />
