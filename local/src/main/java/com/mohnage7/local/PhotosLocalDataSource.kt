@@ -5,6 +5,6 @@ import io.reactivex.Single
 
 
 interface PhotosLocalDataSource {
-    fun getMoviePhotos(): Single<List<Photo>>
+    fun getMoviePhotos(movieName: String): Single<List<Photo>>
     fun insertAll(photosList: List<Photo>)
 }

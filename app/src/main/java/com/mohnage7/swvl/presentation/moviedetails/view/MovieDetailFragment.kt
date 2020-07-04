@@ -4,17 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import com.mohnage7.network.PhotosRequestConfig
+import com.mohnage7.network.model.PhotosRequestConfig
 import com.mohnage7.swvl.R
+import com.mohnage7.swvl.framework.extentions.makeGone
+import com.mohnage7.swvl.framework.extentions.makeVisible
 import com.mohnage7.swvl.presentation.model.DataWrapper
 import com.mohnage7.swvl.presentation.model.Movie
 import com.mohnage7.swvl.presentation.moviedetails.viewmodel.MovieDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_movie_details.*
 import kotlinx.android.synthetic.main.item_movie_placeholder.*
 import kotlinx.android.synthetic.main.layout_images_viewpager.*
+import kotlinx.android.synthetic.main.layout_loading_photos.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.math.abs
@@ -60,48 +64,71 @@ class MovieDetailFragment : Fragment() {
                 .observe(this, androidx.lifecycle.Observer { dataWrapper ->
                     when (dataWrapper.status) {
                         DataWrapper.Status.SUCCESS -> {
-                            dataWrapper.data?.let { photosList -> setupViewpager(photosList) }
+                            hideLoading()
+                            if (dataWrapper.data.isNullOrEmpty()){
+                                hideContent()
+                            }else{
+                                showContent()
+                                setupViewpager(dataWrapper.data)
+                            }
                         }
+                        DataWrapper.Status.ERROR -> {
+                            hideLoading()
+                            hideContent()
+                            handleError(dataWrapper.message)
+                        }
+                        DataWrapper.Status.LOADING -> showLoading()
                     }
                 })
 
         }
+    }
 
-//        setupViewpager(
-//            listOf(
-//                "https://farm66.static.flickr.com/65535/49961792951_35c3344c0f.jpg",
-//                "https://farm66.static.flickr.com/65535/32885403967_be14b95a9c.jpg",
-//                "https://farm66.static.flickr.com/65535/48105179031_b5aeb65eb0.jpg"
-//            )
-//        )
+    private fun showContent() {
+        viewPager.makeVisible()
+        countTxtView.makeVisible()
+    }
+
+    private fun hideContent() {
+        viewPager.makeGone()
+        countTxtView.makeGone()
+    }
+
+    private fun handleError(message: String?) {
+        message?.let { Toast.makeText(activity, message, Toast.LENGTH_SHORT).show() }
+    }
+
+    private fun showLoading() {
+        shimmerFrameLayout.makeVisible()
+    }
+
+    private fun hideLoading() {
+        shimmerFrameLayout.stopShimmer()
+        shimmerFrameLayout.makeGone()
     }
 
 
-    private fun setupViewpager(comicList: List<String>) {
-        val comicsViewPager = ImagesViewPager(comicList)
-        viewPager.adapter = comicsViewPager
-        // You need to retain one page on each side so that the next and previous items are visible
-        viewPager.offscreenPageLimit = 1
-        // Add a PageTransformer that translates the next and previous items horizontally
-        // towards the center of the screen, which makes them visible
-        val nextItemVisiblePx =
-            resources.getDimension(R.dimen.viewpager_next_item_visible).toInt()
-        val currentItemHorizontalMarginPx =
-            resources.getDimension(R.dimen.viewpager_current_item_horizontal_margin).toInt()
-        val pageTranslationX = nextItemVisiblePx + currentItemHorizontalMarginPx
-        val pageTransformer =
-            ViewPager2.PageTransformer { page: View, position: Float ->
-                page.translationX = -pageTranslationX * position
-                // Next line scales the item's height. You can remove it if you don't want this effect
-                page.scaleY = 1 - 0.25f * abs(position)
-            }
-        viewPager.setPageTransformer(pageTransformer)
-        viewPager.addItemDecoration(
-            HorizontalMarginItemDecoration(
-                activity!!,
-                R.dimen.viewpager_current_item_horizontal_margin
+    private fun setupViewpager(photosList: List<String>?) {
+        photosList?.let { list ->
+            val comicsViewPager = ImagesViewPager(list)
+            viewPager.adapter = comicsViewPager
+            // You need to retain one page on each side so that the next and previous items are visible
+            viewPager.offscreenPageLimit = 1
+            // set page animation
+            val pageTransformer = getViewPagerTransformation()
+            viewPager.setPageTransformer(pageTransformer)
+            // show parts of the side images
+            viewPager.addItemDecoration(
+                HorizontalMarginItemDecoration(
+                    activity!!,
+                    R.dimen.viewpager_current_item_horizontal_margin
+                )
             )
-        )
+            setOnPageChangeListener(list)
+        }
+    }
+
+    private fun setOnPageChangeListener(photosList: List<String>) {
         viewPager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
             override fun onPageScrolled(
                 position: Int,
@@ -113,10 +140,25 @@ class MovieDetailFragment : Fragment() {
                     Locale.ENGLISH,
                     "%d/%d",
                     position + 1,
-                    comicList.size
+                    photosList.size
                 )
             }
         })
+    }
+
+    private fun getViewPagerTransformation(): ViewPager2.PageTransformer {
+        // Add a PageTransformer that translates the next and previous items horizontally
+        // towards the center of the screen, which makes them visible
+        val nextItemVisiblePx =
+            resources.getDimension(R.dimen.viewpager_next_item_visible).toInt()
+        val currentItemHorizontalMarginPx =
+            resources.getDimension(R.dimen.viewpager_current_item_horizontal_margin).toInt()
+        val pageTranslationX = nextItemVisiblePx + currentItemHorizontalMarginPx
+        return ViewPager2.PageTransformer { page: View, position: Float ->
+            page.translationX = -pageTranslationX * position
+            // Next line scales the item's height. You can remove it if you don't want this effect
+            page.scaleY = 1 - 0.25f * abs(position)
+        }
     }
 
     private fun setViews(movie: Movie?) {

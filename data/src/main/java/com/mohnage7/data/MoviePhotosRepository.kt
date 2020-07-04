@@ -3,7 +3,7 @@ package com.mohnage7.data
 import com.mohnage7.domain.Photo
 import com.mohnage7.local.PhotosLocalDataSource
 import com.mohnage7.network.NetworkDataSource
-import com.mohnage7.network.PhotosRequestConfig
+import com.mohnage7.network.model.PhotosRequestConfig
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
@@ -12,7 +12,7 @@ class MoviePhotosRepository(
     private val localDataSource: PhotosLocalDataSource
 ) {
     fun getMoviePhotosFromDataSource(photosRequestConfig: PhotosRequestConfig): Single<List<Photo>> {
-        return localDataSource.getMoviePhotos()
+        return localDataSource.getMoviePhotos(photosRequestConfig.movieName)
             .filter { it.isNotEmpty() }
             .switchIfEmpty(networkDataSource.getMoviePhotos(
                 photosRequestConfig.apiKey,
@@ -22,7 +22,7 @@ class MoviePhotosRepository(
                 photosRequestConfig.page,
                 photosRequestConfig.perPage
             ).subscribeOn(Schedulers.io()).flatMap {
-                Single.just(it.photos)
+                Single.just(it.photosBody.photosList)
             }.doOnSuccess { photosList ->
                 photosList?.let {
                     localDataSource.insertAll(it)

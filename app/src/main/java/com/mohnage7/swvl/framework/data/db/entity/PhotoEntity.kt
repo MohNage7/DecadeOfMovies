@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 data class PhotoEntity(
     @NonNull
     @PrimaryKey var id: String,
+    var title: String? = null,
     var farm: String? = null,
     var server: String? = null,
     var secret: String? = null

@@ -8,8 +8,8 @@ import io.reactivex.Single
 
 class MoviePhotosDataSourceImpl(private val dao: MoviePhotosDao) : PhotosLocalDataSource {
 
-    override fun getMoviePhotos(): Single<List<Photo>> {
-        return dao.getMoviePhotos().flatMap {
+    override fun getMoviePhotos(movieName: String): Single<List<Photo>> {
+        return dao.getMoviePhotos(movieName).flatMap {
             Single.just(it.map { photoEntity ->
                 Photo(
                     photoEntity.farm,
@@ -25,6 +25,7 @@ class MoviePhotosDataSourceImpl(private val dao: MoviePhotosDao) : PhotosLocalDa
         dao.insertAll(photosList.map { photo ->
             PhotoEntity(
                 photo.id,
+                photo.title,
                 photo.farm,
                 photo.server,
                 photo.secret

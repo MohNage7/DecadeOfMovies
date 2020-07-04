@@ -1,4 +1,4 @@
-package com.mohnage7.network
+package com.mohnage7.network.model
 
 class PhotosRequestConfig(
     val apiKey: String,

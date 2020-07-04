@@ -2,7 +2,7 @@ package com.mohnage7.usecase
 
 import com.mohnage7.data.MoviePhotosRepository
 import com.mohnage7.domain.Photo
-import com.mohnage7.network.PhotosRequestConfig
+import com.mohnage7.network.model.PhotosRequestConfig
 import io.reactivex.Single
 
 
