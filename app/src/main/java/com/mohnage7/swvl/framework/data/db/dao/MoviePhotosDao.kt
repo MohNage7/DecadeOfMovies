@@ -9,8 +9,8 @@ import io.reactivex.Single
 @Dao
 interface MoviePhotosDao {
     @Insert
-    fun insertAll(postsList: List<PhotoEntity>)
+    fun insert(postsList: PhotoEntity)
 
-    @Query("SELECT * from photos WHERE title = :movieName")
-    fun getMoviePhotos(movieName: String): Single<List<PhotoEntity>>
+    @Query("SELECT * from photos WHERE id = :movieId")
+    fun getMoviePhotos(movieId: String): Single<PhotoEntity>
 }

@@ -2,5 +2,4 @@
     android:id="@+id/movieImgView"
     android:layout_width="match_parent"
     android:scaleType="centerCrop"
-    android:src="@color/light_grey"
     android:layout_height="match_parent" />

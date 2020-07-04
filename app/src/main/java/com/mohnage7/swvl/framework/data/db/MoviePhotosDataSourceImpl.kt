@@ -1,6 +1,5 @@
 package com.mohnage7.swvl.framework.data.db
 
-import com.mohnage7.domain.Photo
 import com.mohnage7.local.PhotosLocalDataSource
 import com.mohnage7.swvl.framework.data.db.dao.MoviePhotosDao
 import com.mohnage7.swvl.framework.data.db.entity.PhotoEntity
@@ -8,29 +7,13 @@ import io.reactivex.Single
 
 class MoviePhotosDataSourceImpl(private val dao: MoviePhotosDao) : PhotosLocalDataSource {
 
-    override fun getMoviePhotos(movieName: String): Single<List<Photo>> {
-        return dao.getMoviePhotos(movieName).flatMap {
-            Single.just(it.map { photoEntity ->
-                Photo(
-                    photoEntity.farm,
-                    photoEntity.server,
-                    photoEntity.id,
-                    photoEntity.secret
-                )
-            })
+    override fun getMoviePhotos(movieId: String): Single<List<String>> {
+        return dao.getMoviePhotos(movieId).flatMap {
+            Single.just(it.photosList)
         }
     }
 
-    override fun insertAll(photosList: List<Photo>) {
-        dao.insertAll(photosList.map { photo ->
-            PhotoEntity(
-                photo.id,
-                photo.title,
-                photo.farm,
-                photo.server,
-                photo.secret
-            )
-        })
+    override fun insertAll(movieId: String, photosList: List<String>) {
+        dao.insert(PhotoEntity(movieId, photosList))
     }
-
 }

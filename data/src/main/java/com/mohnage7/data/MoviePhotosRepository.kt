@@ -11,10 +11,14 @@ class MoviePhotosRepository(
     private val networkDataSource: NetworkDataSource,
     private val localDataSource: PhotosLocalDataSource
 ) {
-    fun getMoviePhotosFromDataSource(photosRequestConfig: PhotosRequestConfig): Single<List<Photo>> {
-        return localDataSource.getMoviePhotos(photosRequestConfig.movieName)
-            .filter { it.isNotEmpty() }
-            .switchIfEmpty(networkDataSource.getMoviePhotos(
+    /**
+     * This method do the following:
+     * - Try to fetch the data from the database. If it fails then try to fetch it from network
+     * - The response that is
+     */
+    fun getMoviePhotosFromDataSource(photosRequestConfig: PhotosRequestConfig): Single<List<String>> {
+        return localDataSource.getMoviePhotos(photosRequestConfig.movieId)
+            .onErrorResumeNext(networkDataSource.getMoviePhotos(
                 photosRequestConfig.apiKey,
                 photosRequestConfig.format,
                 photosRequestConfig.noJsonCallback,
@@ -22,11 +26,16 @@ class MoviePhotosRepository(
                 photosRequestConfig.page,
                 photosRequestConfig.perPage
             ).subscribeOn(Schedulers.io()).flatMap {
-                Single.just(it.photosBody.photosList)
+                Single.just(getListOfURLFrom(it.photosBody.photosList))
             }.doOnSuccess { photosList ->
                 photosList?.let {
-                    localDataSource.insertAll(it)
+                    localDataSource.insertAll(photosRequestConfig.movieId, it)
                 }
             }).subscribeOn(Schedulers.io())
+    }
+
+
+    private fun getListOfURLFrom(photosList: List<Photo>): List<String> {
+        return photosList.map { photo -> photo.getPhotoURL() }
     }
 }

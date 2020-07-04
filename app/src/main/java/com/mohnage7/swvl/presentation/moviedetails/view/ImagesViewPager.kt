@@ -38,9 +38,19 @@ class ImagesViewPager(private val imagesList: List<String>) : RecyclerView.Adapt
         override fun bindViews(position: Int) {
             super.bindViews(position)
             val image = imagesList[position]
-            Glide.with(itemView.context).load(image).into(itemView.movieImgView)
+            loadImage(image)
         }
 
-        override fun clear() {}
+        private fun loadImage(image: String) {
+            Glide.with(itemView.context)
+                .load(image)
+                .placeholder(R.color.light_grey)
+                .error(R.drawable.ic_broken_image)
+                .into(itemView.movieImgView)
+        }
+
+        override fun clear() {
+            itemView.movieImgView.setImageDrawable(null)
+        }
     }
 }

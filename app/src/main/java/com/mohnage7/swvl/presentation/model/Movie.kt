@@ -52,4 +52,12 @@ class Movie(
             return arrayOfNulls(size)
         }
     }
+
+    /**
+     * Because the local file doesn't have any id to be able to build a relationship between the movie
+     * and its photos we will generate an Id to insert and retrieve the data with.
+     */
+    fun getMovieUniqueId(): String {
+        return "${title?.replace("\\s+".toRegex(), "")?.trim()}_${year}"
+    }
 }

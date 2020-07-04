@@ -9,6 +9,7 @@ import com.mohnage7.swvl.R
 import com.mohnage7.swvl.framework.extentions.makeGone
 import com.mohnage7.swvl.framework.extentions.makeVisible
 import com.mohnage7.swvl.framework.extentions.replaceFragment
+import com.mohnage7.swvl.presentation.model.DataWrapper
 import com.mohnage7.swvl.presentation.model.DataWrapper.Status
 import com.mohnage7.swvl.presentation.model.Movie
 import com.mohnage7.swvl.presentation.moviedetails.view.MovieDetailFragment
@@ -49,14 +50,18 @@ class MoviesActivity : AppCompatActivity(), MovieClickListener {
         moviesViewModel
             .observeMoviesList()
             .observe(this, Observer { dataWrapper ->
-                when (dataWrapper.status) {
-                    Status.SUCCESS -> {
-                        hideLoading()
-                        setMoviesAdapter(dataWrapper.data)
-                    }
-                    Status.LOADING -> showLoading()
-                }
+                handleResult(dataWrapper)
             })
+    }
+
+    private fun handleResult(dataWrapper: DataWrapper<List<Movie>>) {
+        when (dataWrapper.status) {
+            Status.SUCCESS -> {
+                hideLoading()
+                setMoviesAdapter(dataWrapper.data)
+            }
+            Status.LOADING -> showLoading()
+        }
     }
 
     private fun setMoviesAdapter(data: List<Movie>?) {

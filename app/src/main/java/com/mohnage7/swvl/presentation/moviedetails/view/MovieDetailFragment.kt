@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.mohnage7.network.model.PhotosRequestConfig
+import com.mohnage7.swvl.BuildConfig.API_KEY
 import com.mohnage7.swvl.R
 import com.mohnage7.swvl.framework.extentions.makeGone
 import com.mohnage7.swvl.framework.extentions.makeVisible
@@ -52,35 +53,52 @@ class MovieDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setViews(movie)
-        movie?.title?.let {
+        movie?.let { movie ->
+            setViews(movie)
+            requestMoviePhotos(movie)
+            observeMoviePhotosListChanges()
+
+        }
+    }
+
+    private fun observeMoviePhotosListChanges() {
+        movieDetailsViewModel.observePostsChanges()
+            .observe(this, androidx.lifecycle.Observer { dataWrapper ->
+                handleResult(dataWrapper)
+            })
+    }
+
+    private fun handleResult(dataWrapper: DataWrapper<List<String>>) {
+        when (dataWrapper.status) {
+            DataWrapper.Status.SUCCESS -> {
+                hideLoading()
+                if (dataWrapper.data.isNullOrEmpty()) {
+                    hideContent()
+                } else {
+                    showContent()
+                    setupViewpager(dataWrapper.data)
+                }
+            }
+            DataWrapper.Status.ERROR -> {
+                hideLoading()
+                hideContent()
+                handleError(dataWrapper.message)
+            }
+            DataWrapper.Status.LOADING -> showLoading()
+        }
+    }
+
+    private fun requestMoviePhotos(
+        movie: Movie
+    ) {
+        movie.title?.let {
             movieDetailsViewModel.getMoviePhotos(
                 PhotosRequestConfig(
-                    "f204401bb9bb1d699f145f55ed61df03", movieName = it
+                    API_KEY,
+                    movieName = it,
+                    movieId = movie.getMovieUniqueId()
                 )
             )
-
-            movieDetailsViewModel.observePostsChanges()
-                .observe(this, androidx.lifecycle.Observer { dataWrapper ->
-                    when (dataWrapper.status) {
-                        DataWrapper.Status.SUCCESS -> {
-                            hideLoading()
-                            if (dataWrapper.data.isNullOrEmpty()){
-                                hideContent()
-                            }else{
-                                showContent()
-                                setupViewpager(dataWrapper.data)
-                            }
-                        }
-                        DataWrapper.Status.ERROR -> {
-                            hideLoading()
-                            hideContent()
-                            handleError(dataWrapper.message)
-                        }
-                        DataWrapper.Status.LOADING -> showLoading()
-                    }
-                })
-
         }
     }
 
