@@ -182,8 +182,8 @@ class MovieDetailFragment : Fragment() {
     private fun setViews(movie: Movie?) {
         movie?.let {
             titleTxtView.text = movie.title
-            ratingTxtView.text = movie.rating
-            yearTxtView.text = movie.year
+            ratingTxtView.text = movie.rating.toString()
+            yearTxtView.text = movie.year.toString()
             genresTxtView.text = movie.getGenresListAsString()
             castTxtView.text = movie.getCastListAsString()
         }

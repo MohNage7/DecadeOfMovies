@@ -4,5 +4,13 @@ import com.mohnage7.data.MoviesRepository
 import com.mohnage7.domain.LocalMovie
 
 class GetMoviesUseCase(private val repository: MoviesRepository) {
-    operator fun invoke(): List<LocalMovie> = repository.getMoviesFromDataSource().sortedBy { it.title }
+
+    private var moviesList: List<LocalMovie>? = null
+
+    operator fun invoke(): List<LocalMovie> {
+        if (moviesList.isNullOrEmpty()) {
+            moviesList = repository.getMoviesFromDataSource().sortedBy { it.title }
+        }
+        return moviesList as List<LocalMovie>
+    }
 }

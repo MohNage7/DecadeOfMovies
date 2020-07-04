@@ -5,15 +5,17 @@ import android.os.Parcelable
 
 class Movie(
     val title: String? = null,
-    val year: String? = null,
-    val rating: String? = null,
+    val year: Int,
+    val rating: Int ,
     private val genresList: List<String>? = null,
     private val castList: List<String>? = null
 ) : Parcelable {
+
+
     constructor(parcel: Parcel) : this(
         parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
+        parcel.readInt(),
+        parcel.readInt(),
         parcel.createStringArrayList(),
         parcel.createStringArrayList()
     ) {
@@ -31,10 +33,19 @@ class Movie(
         return cast
     }
 
+
+    /**
+     * Because the local file doesn't have any id to be able to build a relationship between the movie
+     * and its photos we will generate an Id to insert and retrieve the data with.
+     */
+    fun getMovieUniqueId(): String {
+        return "${title?.replace("\\s+".toRegex(), "")?.trim()}_${year}"
+    }
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(title)
-        parcel.writeString(year)
-        parcel.writeString(rating)
+        parcel.writeInt(year)
+        parcel.writeInt(rating)
         parcel.writeStringList(genresList)
         parcel.writeStringList(castList)
     }
@@ -51,13 +62,5 @@ class Movie(
         override fun newArray(size: Int): Array<Movie?> {
             return arrayOfNulls(size)
         }
-    }
-
-    /**
-     * Because the local file doesn't have any id to be able to build a relationship between the movie
-     * and its photos we will generate an Id to insert and retrieve the data with.
-     */
-    fun getMovieUniqueId(): String {
-        return "${title?.replace("\\s+".toRegex(), "")?.trim()}_${year}"
     }
 }

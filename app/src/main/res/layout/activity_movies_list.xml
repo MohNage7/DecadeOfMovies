@@ -22,15 +22,11 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
+    <include
+        layout="@layout/layout_movies_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <include layout="@layout/layout_movies_list" />
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <include layout="@layout/layout_no_data" />
 
