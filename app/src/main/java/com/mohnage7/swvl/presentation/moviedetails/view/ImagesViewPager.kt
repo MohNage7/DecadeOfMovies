@@ -44,7 +44,7 @@ class ImagesViewPager(private val imagesList: List<String>) : RecyclerView.Adapt
         private fun loadImage(image: String) {
             Glide.with(itemView.context)
                 .load(image)
-                .placeholder(R.color.light_grey)
+                .placeholder(R.color.colorPrimaryDark)
                 .error(R.drawable.ic_broken_image)
                 .into(itemView.movieImgView)
         }
