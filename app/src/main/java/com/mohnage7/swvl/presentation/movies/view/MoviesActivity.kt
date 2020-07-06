@@ -1,7 +1,5 @@
 package com.mohnage7.swvl.presentation.movies.view
 
-import android.app.SearchManager
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -130,22 +128,25 @@ class MoviesActivity : AppCompatActivity(), MovieClickListener {
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
+        // init
         val menuItem = menu.findItem(R.id.action_search)
         val searchView = menuItem.actionView as SearchView
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchEditText = searchView.findViewById<EditText>(R.id.search_src_text)
-        searchEditText.setHintTextColor(ContextCompat.getColor(this, R.color.soft_grey))
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(this.componentName))
+        // set hint and its color
+        searchEditText.setHintTextColor(ContextCompat.getColor(this, R.color.grey))
         searchView.queryHint = getString(R.string.hint_search)
-        searchView.clearFocus()
+        // set listeners
+        setQueryTextListenerFor(searchView)
+        setOnActionExpandListenerFor(menuItem, searchView)
+        return true
+    }
+
+    private fun setQueryTextListenerFor(searchView: SearchView) {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                if (query.trim { it <= ' ' }.length > 1) {
-                    searchView.clearFocus()
-                    searchInMovies(query)
-                }
+                searchView.clearFocus()
+                searchInMovies(query)
                 return false
             }
 
@@ -153,6 +154,12 @@ class MoviesActivity : AppCompatActivity(), MovieClickListener {
                 return false
             }
         })
+    }
+
+    private fun setOnActionExpandListenerFor(
+        menuItem: MenuItem,
+        searchView: SearchView
+    ) {
         menuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem): Boolean {
                 return true
@@ -164,7 +171,6 @@ class MoviesActivity : AppCompatActivity(), MovieClickListener {
                 return true
             }
         })
-        return true
     }
 
     private fun showSearchLoading() {
