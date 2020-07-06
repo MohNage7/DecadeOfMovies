@@ -8,3 +8,14 @@ class LocalMovie(
     val genres: List<String>? = null,
     val cast: List<String>? = null
 )
+{
+    fun toResultMovie(): SearchItem.ResultMovie {
+        return SearchItem.ResultMovie(
+            title,
+            year,
+            rating,
+            genres,
+            cast
+        )
+    }
+}
