@@ -21,14 +21,6 @@ allprojects {
     }
 }
 
-ext {
-    koin_version = "2.0.1"
-    lifecycle_version = "2.2.0"
-    retrofitVersion = "2.6.2"
-    roomVersion = '2.2.5'
-}
-
-
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

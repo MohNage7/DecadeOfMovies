@@ -3,12 +3,14 @@ apply plugin: 'kotlin'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation project(':domain')
+    // kotlin
+    implementation Dependencies.kotlinStandardLibrary
     //RX
-    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    api Dependencies.rxAndroid
+    // network
+    implementation Dependencies.retrofit
+    implementation Dependencies.retrofitGsonConverter
 }
 
 sourceCompatibility = "1.7"
