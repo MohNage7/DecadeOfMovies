@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mohnage7.domain.SearchItem
 import com.mohnage7.swvl.R
 import com.mohnage7.swvl.framework.base.BaseViewHolder
+import com.mohnage7.swvl.presentation.model.Movie
 import com.mohnage7.swvl.presentation.movies.view.callback.MovieClickListener
 import kotlinx.android.synthetic.main.item_category.view.*
 import kotlinx.android.synthetic.main.item_search.view.*
@@ -40,7 +41,7 @@ class SearchAdapter(
 
 
     override fun getItemViewType(position: Int) = when (itemsList[position]) {
-        is SearchItem.Movie -> ITEM_MOVIE
+        is SearchItem.ResultMovie -> ITEM_MOVIE
         is SearchItem.Category -> ITEM_CATEGORY
     }
 
@@ -49,12 +50,27 @@ class SearchAdapter(
 
         override fun bindViews(position: Int) {
             super.bindViews(position)
-            val movie = itemsList[position] as SearchItem.Movie
-            itemView.titleTxtView.text = movie.title
-            // itemView.setOnClickListener { onMovieClickListener.onMovieClick(movie) }
+            val resultMovie = itemsList[position] as SearchItem.ResultMovie
+            itemView.titleTxtView.text = resultMovie.title
+            itemView.setOnClickListener {
+                setOnItemClickListener(resultMovie)
+            }
+        }
+
+        fun setOnItemClickListener(resultMovie: SearchItem.ResultMovie) {
+            onMovieClickListener.onMovieClick(
+                Movie(
+                    resultMovie.title,
+                    resultMovie.year,
+                    resultMovie.rating,
+                    resultMovie.genresList,
+                    resultMovie.castList
+                )
+            )
         }
 
         override fun clear() {
+            itemView.titleTxtView.text = ""
         }
     }
 
@@ -65,7 +81,6 @@ class SearchAdapter(
             super.bindViews(position)
             val movie = itemsList[position] as SearchItem.Category
             itemView.categoryTxtView.text = movie.year.toString()
-            // itemView.setOnClickListener { onMovieClickListener.onMovieClick(movie) }
         }
 
 
