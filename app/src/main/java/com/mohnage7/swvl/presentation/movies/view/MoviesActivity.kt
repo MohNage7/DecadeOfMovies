@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -100,6 +99,7 @@ class MoviesActivity : AppCompatActivity(), MovieClickListener {
 
     override fun onMovieClick(movie: Movie) {
         if (twoPane) {
+            hideSearchLayout()
             navigateToDetailFragmentWith(movie)
         } else {
             launchDetailActivityWith(movie)
@@ -167,11 +167,15 @@ class MoviesActivity : AppCompatActivity(), MovieClickListener {
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
-                searchLayout.visibility = View.GONE
                 searchView.onActionViewExpanded()
+                hideSearchLayout()
                 return true
             }
         })
+    }
+
+    private fun hideSearchLayout() {
+        searchLayout.makeGone()
     }
 
     private fun showSearchLoading() {
@@ -190,9 +194,9 @@ class MoviesActivity : AppCompatActivity(), MovieClickListener {
             if (message == null || message.isEmpty()) getString(R.string.no_data_found) else message
     }
 
-    private fun setSearchViewsVisibility(dataAvailable: Boolean) {
+    private fun setSearchViewsVisibility(isVisible: Boolean) {
         searchLayout.makeVisible()
-        if (dataAvailable) {
+        if (isVisible) {
             showSearchContent()
         } else {
             showNoSearchDataLayout()

@@ -7,6 +7,7 @@
     android:layout_margin="@dimen/dp_2"
     app:cardBackgroundColor="@color/colorPrimary"
     app:cardElevation="@dimen/dp_4"
+    android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="@dimen/dp_4">
 
     <include layout="@layout/item_movie"/>
