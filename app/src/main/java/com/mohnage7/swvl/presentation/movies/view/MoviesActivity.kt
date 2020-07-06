@@ -12,12 +12,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mohnage7.domain.SearchItem
 import com.mohnage7.swvl.R
 import com.mohnage7.swvl.framework.extentions.makeGone
 import com.mohnage7.swvl.framework.extentions.makeVisible
+import com.mohnage7.swvl.framework.extentions.observe
 import com.mohnage7.swvl.framework.extentions.replaceFragment
 import com.mohnage7.swvl.presentation.model.DataWrapper
 import com.mohnage7.swvl.presentation.model.DataWrapper.Status
@@ -46,41 +46,36 @@ class MoviesActivity : AppCompatActivity(), MovieClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movies_list)
-        observeMoviesList()
-
         setSupportActionBar(toolbar)
+        // observe data changes
+        with(moviesViewModel) {
+            observe(observeSearchMoviesList(), ::renderSearchData)
+            observe(observeMoviesList(), ::renderMoviesData)
+        }
+    }
 
-        moviesViewModel.observeSearchMoviesList().observe(this, Observer { dataWrapper ->
-            when (dataWrapper.status) {
-                Status.LOADING -> showSearchLoading()
-                Status.ERROR -> handleSearchError(dataWrapper.message)
-                Status.SUCCESS -> {
-                    dataWrapper?.data?.let { setupSearchAdapter(it) }
 
+    private fun renderSearchData(dataWrapper: DataWrapper<List<SearchItem>>) {
+        when (dataWrapper.status) {
+            Status.LOADING -> showSearchLoading()
+            Status.ERROR -> {
+                hideSearchLoading()
+                setSearchViewsVisibility(false)
+                handleSearchError(dataWrapper.message)
+            }
+            Status.SUCCESS -> {
+                hideSearchLoading()
+                if (!dataWrapper.data.isNullOrEmpty()) {
+                    setSearchViewsVisibility(true)
+                    setupSearchAdapter(dataWrapper.data)
+                } else {
+                    setSearchViewsVisibility(false)
                 }
             }
-        })
+        }
     }
 
-    /**
-     * The detail container view will be present only in the
-     * large-screen layouts (res/values-w900dp).
-     * If this view is present, then the
-     * activity should be in two-pane mode.
-     */
-    private fun isLargeDevice(): Boolean {
-        return findViewById<NestedScrollView>(R.id.item_detail_container) != null
-    }
-
-    private fun observeMoviesList() {
-        moviesViewModel
-            .observeMoviesList()
-            .observe(this, Observer { dataWrapper ->
-                handleResult(dataWrapper)
-            })
-    }
-
-    private fun handleResult(dataWrapper: DataWrapper<List<Movie>>) {
+    private fun renderMoviesData(dataWrapper: DataWrapper<List<Movie>>) {
         when (dataWrapper.status) {
             Status.SUCCESS -> {
                 hideLoading()
@@ -95,7 +90,6 @@ class MoviesActivity : AppCompatActivity(), MovieClickListener {
             moviesRecyclerView.adapter = MoviesAdapter(it, this)
         }
     }
-
 
     private fun showLoading() {
         shimmerFrameLayout.makeVisible()
@@ -180,33 +174,51 @@ class MoviesActivity : AppCompatActivity(), MovieClickListener {
         searchRecyclerView.makeGone()
     }
 
+    private fun hideSearchLoading() {
+        progressBar.makeGone()
+    }
+
     private fun handleSearchError(message: String?) {
-        setSearchViewsVisibility(false)
         noSearchDataTxtView.text =
             if (message == null || message.isEmpty()) getString(R.string.no_data_found) else message
     }
 
     private fun setSearchViewsVisibility(dataAvailable: Boolean) {
         searchLayout.makeVisible()
-        progressBar.makeGone()
         if (dataAvailable) {
-            searchRecyclerView.makeVisible()
-            noSearchDataTxtView.makeGone()
+            showSearchContent()
         } else {
-            searchRecyclerView.makeGone()
-            noSearchDataTxtView.makeVisible()
+            showNoSearchDataLayout()
         }
     }
 
     private fun setupSearchAdapter(moviesList: List<SearchItem>) {
-        setSearchViewsVisibility(true)
         val adapter = SearchAdapter(moviesList, this)
         searchRecyclerView.layoutManager = LinearLayoutManager(this)
         searchRecyclerView.adapter = adapter
+    }
+
+    private fun showNoSearchDataLayout() {
+        searchRecyclerView.makeGone()
+        noSearchDataTxtView.makeVisible()
+    }
+
+    private fun showSearchContent() {
+        searchRecyclerView.makeVisible()
+        noSearchDataTxtView.makeGone()
     }
 
     private fun searchInMovies(query: String) {
         moviesViewModel.updateSearchQuery(query)
     }
 
+    /**
+     * The detail container view will be present only in the
+     * large-screen layouts (res/values-w900dp).
+     * If this view is present, then the
+     * activity should be in two-pane mode.
+     */
+    private fun isLargeDevice(): Boolean {
+        return findViewById<NestedScrollView>(R.id.item_detail_container) != null
+    }
 }

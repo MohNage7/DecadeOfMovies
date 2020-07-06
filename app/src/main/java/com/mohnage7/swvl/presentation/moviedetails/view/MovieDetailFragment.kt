@@ -13,6 +13,7 @@ import com.mohnage7.swvl.BuildConfig.API_KEY
 import com.mohnage7.swvl.R
 import com.mohnage7.swvl.framework.extentions.makeGone
 import com.mohnage7.swvl.framework.extentions.makeVisible
+import com.mohnage7.swvl.framework.extentions.observe
 import com.mohnage7.swvl.presentation.model.DataWrapper
 import com.mohnage7.swvl.presentation.model.Movie
 import com.mohnage7.swvl.presentation.moviedetails.viewmodel.MovieDetailsViewModel
@@ -57,18 +58,16 @@ class MovieDetailFragment : Fragment() {
             setViews(movie)
             requestMoviePhotos(movie)
             observeMoviePhotosListChanges()
-
         }
     }
 
     private fun observeMoviePhotosListChanges() {
-        movieDetailsViewModel.observePostsChanges()
-            .observe(this, androidx.lifecycle.Observer { dataWrapper ->
-                handleResult(dataWrapper)
-            })
+        with(movieDetailsViewModel) {
+            observe(observePostsChanges(), ::renderPhotosData)
+        }
     }
 
-    private fun handleResult(dataWrapper: DataWrapper<List<String>>) {
+    private fun renderPhotosData(dataWrapper: DataWrapper<List<String>>) {
         when (dataWrapper.status) {
             DataWrapper.Status.SUCCESS -> {
                 hideLoading()
