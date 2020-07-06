@@ -43,9 +43,16 @@ class MovieDetailsActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem) =
         when (item.itemId) {
             android.R.id.home -> {
-                finish()
+                onBackPressed()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        // exits activity with image transaction animation
+        overridePendingTransition(R.anim.no_animation, R.anim.anim_slide_down)
+    }
 }

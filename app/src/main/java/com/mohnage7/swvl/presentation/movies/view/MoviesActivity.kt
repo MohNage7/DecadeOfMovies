@@ -114,6 +114,7 @@ class MoviesActivity : AppCompatActivity(), MovieClickListener {
             putExtras(bundle)
         }
         startActivity(intent)
+        overridePendingTransition(R.anim.anim_slide_up, R.anim.no_animation)
     }
 
     private fun navigateToDetailFragmentWith(movie: Movie) {
