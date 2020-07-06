@@ -27,7 +27,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dp_8"
         android:drawableStart="@drawable/ic_movie_genres"
-        android:drawablePadding="@dimen/dp_8"
+        android:drawablePadding="@dimen/dp_4"
         android:ellipsize="end"
         android:gravity="start|center_vertical"
         android:maxLines="1"
@@ -53,7 +53,7 @@
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/dp_16"
         android:drawableStart="@drawable/ic_time"
-        android:drawablePadding="@dimen/dp_8"
+        android:drawablePadding="@dimen/dp_4"
         android:gravity="center"
         android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/sp_14"
@@ -68,13 +68,14 @@
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/dp_16"
         android:drawableStart="@drawable/ic_star"
-        android:drawablePadding="@dimen/dp_8"
+        android:drawablePadding="@dimen/dp_4"
         android:gravity="center"
         android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/sp_14"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/yearTxtView"
         app:layout_constraintTop_toTopOf="@id/genresTxtView"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:text="5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
