@@ -1,12 +1,13 @@
 package com.mohnage7.domain
 
 sealed class SearchItem {
-    data class Movie(
-        val title: String? = null,
+    data class ResultMovie(
+        val title: String,
         val year: Int,
-        val rating: Int? = null,
-        private val genresList: List<String>? = null,
-        private val castList: List<String>? = null
+        val rating: Int,
+        val genresList: List<String>? = null,
+        val castList: List<String>? = null
     ) : SearchItem()
+
     data class Category(val year: Int) : SearchItem()
 }

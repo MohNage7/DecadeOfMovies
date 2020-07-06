@@ -52,6 +52,7 @@ class SearchAdapter(
             super.bindViews(position)
             val resultMovie = itemsList[position] as SearchItem.ResultMovie
             itemView.titleTxtView.text = resultMovie.title
+            itemView.ratingTxtView.text = resultMovie.rating.toString()
             itemView.setOnClickListener {
                 setOnItemClickListener(resultMovie)
             }
@@ -71,6 +72,7 @@ class SearchAdapter(
 
         override fun clear() {
             itemView.titleTxtView.text = ""
+            itemView.ratingTxtView.text = ""
         }
     }
 
