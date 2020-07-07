@@ -30,7 +30,7 @@ class GetSearchMoviesUseCase(val getMoviesUseCase: GetMoviesUseCase) {
      * @param elementsCount number of elements that we want our method to return
      * @param items the list that needs to be sorted
      */
-    private fun getHighestNElements(
+    fun getHighestNElements(
         elementsCount: Int,
         items: List<LocalMovie>
     ): List<SearchItem.ResultMovie> {
