@@ -9,6 +9,8 @@ object Versions {
     val shimmer = "0.5.0"
     val glide = "4.11.0"
     val junit = "4.13"
+    val unitTestCore = "3.0.0"
+    val unitTestInline = "2.13.0"
     val extJunit = "1.1.1"
     val espresso = "3.2.0"
     val kotlin = "1.3.72"

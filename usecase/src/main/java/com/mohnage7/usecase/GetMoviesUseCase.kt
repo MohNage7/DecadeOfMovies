@@ -9,7 +9,7 @@ class GetMoviesUseCase(private val repository: MoviesRepository) {
 
     operator fun invoke(): List<LocalMovie> {
         if (moviesList.isNullOrEmpty()) {
-            moviesList = repository.getMoviesFromDataSource().sortedBy { it.title }
+            moviesList = repository.getMoviesFromDataSource()
         }
         return moviesList as List<LocalMovie>
     }

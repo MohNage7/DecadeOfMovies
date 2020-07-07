@@ -6,6 +6,9 @@ dependencies {
     implementation project(':data')
     // kotlin
     implementation Dependencies.kotlinStandardLibrary
+    testImplementation Dependencies.junit
+    testImplementation Dependencies.mockitoCore
+    testImplementation Dependencies.mockitoInline
 }
 
 sourceCompatibility = "1.7"

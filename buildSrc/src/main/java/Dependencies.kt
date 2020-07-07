@@ -29,6 +29,9 @@ object Dependencies {
 
     // test   ----- can be grouped together as an enhancements
     val junit = "junit:junit:${Versions.junit}"
+    val mockitoCore = "org.mockito:mockito-core:${Versions.unitTestCore}"
+    val mockitoInline = "org.mockito:mockito-inline:${Versions.unitTestInline}"
+
     val extJunit = "androidx.test.ext:junit:${Versions.extJunit}"
     val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
 
