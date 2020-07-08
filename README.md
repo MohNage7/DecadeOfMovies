@@ -39,13 +39,44 @@ query
 * Search data is categorized by year and it shows only top 5 movies in that category.
 
 
-### App architecture 
+## App architecture 
+The project is following [clean architucte](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) , It’s a group of practices and decisions that makes the code testable with independable components.
+
 The following diagram shows how all the modules will interact with one another.
 
 <img src="https://github.com/MohNage7/DecadeOfMovies/blob/master/screenshots/clean_arch_diagram.png"  width=600 height=690  />
 
-Each component depends only on the component one level below it.
 
+### Dependency Flow
+As illustrated in the image above each component depends only on the component below it. the higher layers will request the needed data from the layers below it
+and the data is being provided by the lower layers by a reactive paradigm. 
+
+#### Dependency Injection 
+Allows classes to define their dependencies without constructing them. 
+At runtime, another class is responsible for providing these dependencies
+* For DI we are using Koin 
+
+
+### Presentation layer
+The layer that interacts with the UI. for this layer we are applying MVVM architecture pattern
+
+### Framework layer 
+Implements interaction with the Android SDK and provides concrete implementations for the data layer (Room implementation). 
+
+### UseCase layer 
+Sometimes called interactors. Defines actions the user can trigger
+
+### Data Layer
+Abstract definition of all the data sources. (Network / Local )
+
+### Network layer
+Contain abstract and concrete implementation for any logic that is related to network calls. 
+
+### Local Layer
+Abstract definition for the local data persistence.
+
+### Domain Layer
+Contains business logic and entities. 
 
 
 ## Libraries 
