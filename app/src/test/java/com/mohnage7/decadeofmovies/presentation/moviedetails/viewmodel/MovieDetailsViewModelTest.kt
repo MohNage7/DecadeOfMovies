@@ -23,7 +23,7 @@ class MovieDetailsViewModelTest {
 
     @Mock
     lateinit var getMoviePhotosUseCase: GetMoviePhotosUseCase
-    lateinit var SUT: MovieDetailsViewModel
+    private lateinit var SUT: MovieDetailsViewModel
     // required to handle RX Scheduler within the test
     companion object {
         @ClassRule
@@ -41,7 +41,6 @@ class MovieDetailsViewModelTest {
     @Before
     fun setup() {
         SUT = MovieDetailsViewModel(getMoviePhotosUseCase)
-
     }
 
 
