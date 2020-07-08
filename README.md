@@ -39,7 +39,7 @@ query
 * Search data is categorized by year and it shows only top 5 movies in that category.
 
 
-## App architecture 
+## Project Architecture 
 The project is following [clean architucte](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) , It’s a group of practices and decisions that makes the code testable with independable components.
 
 The following diagram shows how all the modules will interact with one another.
