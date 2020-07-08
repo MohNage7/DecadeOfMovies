@@ -33,6 +33,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -65,8 +69,14 @@ dependencies {
 
     // tests
     testImplementation Dependencies.junit
+    testImplementation Dependencies.mockitoCore
+    testImplementation Dependencies.mockitoInline
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.7'
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+
     androidTestImplementation Dependencies.extJunit
     androidTestImplementation Dependencies.espresso
+
 
     // coroutine
     implementation Dependencies.coroutineViewModel
