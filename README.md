@@ -45,3 +45,15 @@ The following diagram shows how all the modules will interact with one another.
 <img src="https://github.com/MohNage7/DecadeOfMovies/blob/master/screenshots/clean_arch_diagram.png"  width=600 height=690  />
 
 Each component depends only on the component one level below it.
+
+
+
+## Libraries 
+* [Coroutine](https://github.com/Kotlin/kotlinx.coroutines) for threading
+* [RxJava/RxAndroid](https://github.com/ReactiveX/RxAndroid) for reactive programming
+* [Retrofit](https://square.github.io/retrofit/) for consuming REST APIs
+* [Koin](https://insert-koin.io/) for dependency injection 
+* [Glide](https://github.com/bumptech/glide) for loading images from remote servers
+* [Facebook Shimmer](https://github.com/facebook/shimmer-android) library as loading animation
+* [Room](https://developer.android.com/topic/libraries/architecture/room) as presistance library. 
+* [Gson](https://github.com/google/gson) as data parser.
