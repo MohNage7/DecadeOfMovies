@@ -71,8 +71,8 @@ dependencies {
     testImplementation Dependencies.junit
     testImplementation Dependencies.mockitoCore
     testImplementation Dependencies.mockitoInline
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.7'
-    testImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation Dependencies.coroutineTesting
+    testImplementation Dependencies.archCoreTesting
 
     androidTestImplementation Dependencies.extJunit
     androidTestImplementation Dependencies.espresso

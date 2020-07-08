@@ -1,10 +1,10 @@
-package com.mohnage7.swvl.presentation.moviedetails.viewmodel
+package com.mohnage7.decadeofmovies.presentation.moviedetails.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.mohnage7.network.model.PhotosRequestConfig
-import com.mohnage7.swvl.presentation.helpers.RxImmediateSchedulerRule
-import com.mohnage7.swvl.presentation.model.DataWrapper
+import com.mohnage7.decadeofmovies.presentation.helpers.RxImmediateSchedulerRule
+import com.mohnage7.decadeofmovies.presentation.model.DataWrapper
 import com.mohnage7.usecase.GetMoviePhotosUseCase
 import io.reactivex.Single
 import org.junit.Assert.assertEquals

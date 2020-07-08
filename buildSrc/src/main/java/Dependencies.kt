@@ -31,6 +31,8 @@ object Dependencies {
     val junit = "junit:junit:${Versions.junit}"
     val mockitoCore = "org.mockito:mockito-core:${Versions.unitTestCore}"
     val mockitoInline = "org.mockito:mockito-inline:${Versions.unitTestInline}"
+    val archCoreTesting = "androidx.arch.core:core-testing:${Versions.archCoreTesting}"
+    val coroutineTesting = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutineTesting}"
 
     val extJunit = "androidx.test.ext:junit:${Versions.extJunit}"
     val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
