@@ -78,6 +78,10 @@ Abstract definition for the local data persistence.
 ### Domain Layer
 Contains business logic and entities. 
 
+## How to Run it
+* The project is only dependant on flicker api. You can create a key from [here](https://www.flickr.com/services/api/misc.api_keys.html)
+* Once you have created the key insert it build.gradle(Module: pp) for both debug and release variants in API_KEY field. 
+
 
 ## Libraries 
 * [Coroutine](https://github.com/Kotlin/kotlinx.coroutines) for threading
